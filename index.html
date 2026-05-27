@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Asistencia QR - Rey Lima</title>
+<title>Asistencia QR</title>
 <script src="https://unpkg.com/html5-qrcode" defer></script>
 
 <style>
-/* DISEÑO LIMPIO Y OPTIMIZADO PARA GAMA BAJA */
 *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
 body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#f4f6f9; color: #111827; }
 
-/* TOPBAR */
 .topbar { background: white; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; width: 100%; }
 .menuBtn { background: none; border: none; font-size: 26px; color: #111827; cursor: pointer; padding: 0; width: 30px; }
 .topbar-titles { display: flex; flex-direction: column; align-items: center; flex-grow: 1; pointer-events: none;}
@@ -19,7 +17,6 @@ body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-ser
 .topbar-sub { font-size: 13px; color: #6b7280; font-weight: 700; margin-top: 2px;}
 .topbar-spacer { width: 30px; }
 
-/* SIDEBAR MÓVIL */
 #sidebarBackdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 90; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
 #sidebarBackdrop.open { opacity: 1; pointer-events: all; }
 #sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 260px; background: white; z-index: 100; transform: translateX(-100%); transition: transform 0.2s; display: flex; flex-direction: column; padding: 30px 20px; box-shadow: 5px 0 15px rgba(0,0,0,0.15); }
@@ -28,120 +25,106 @@ body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-ser
 .sideItem { background: none; border: none; color: #4b5563; text-align: left; padding: 15px; font-size: 17px; font-weight: 700; border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: 0.2s;}
 .sideItem.active { background: #eff6ff; color: #2563eb; }
 
-/* CONTENEDORES Y TARJETAS */
 .wrapper{ max-width:520px; margin:auto; padding:20px; display: flex; flex-direction: column; align-items: center; }
 .card{ background:white; border-radius:18px; padding:25px; box-shadow:0 10px 35px rgba(0,0,0,.06); margin-bottom:20px; width: 100%; max-width: 480px; }
 .text-center { text-align: center; }
 
-/* LOGIN */
 .sucursal-title { font-size: 26px; font-weight: 800; color: #111827; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 1px; text-align: center;}
 .login-subtitle { font-size: 16px; color: #6b7280; margin: 0 0 20px 0; font-weight: 500; text-align: center;}
 #pin { text-align: center; letter-spacing: 2px; font-size: 22px; font-weight: bold;}
 
-/* FORMULARIOS GLOBALES */
 .view-title { text-align: center; margin: 0 0 15px; font-weight: 700; font-size: 22px; color: #111827;}
 input, select, button { width:100%; padding:14px; border-radius:12px; border:1px solid #d1d5db; margin-bottom:12px; font-size:16px; background: white; outline:none; color: #111827;}
-select { text-align-last: center; font-weight: 600;} 
+select { text-align-last: center; font-weight: 600;}
 input:focus, select:focus { border-color: #2563eb; }
 button { background:#111827; color:white; border:none; cursor:pointer; font-weight: 700; font-size: 16px; transition: .1s; }
 button:active { transform: scale(0.96); background:#1f2937; }
 
-/* BOTÓN ACTUALIZAR FIJO */
 .btn-refresh { background: #2563eb; color: white; padding: 16px; font-size: 18px; font-weight: 800; border-radius: 14px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px;}
 .btn-refresh:active { background: #1d4ed8; }
 
-/* CÁMARA Y ESTADOS */
 #qr-reader{ margin-top:10px; border-radius:14px; overflow:hidden; display:none; border: 2px solid #e5e7eb; width: 100%; background: #000;}
 .divider { text-align:center; font-size:13px; color:#9ca3af; font-weight:800; margin: 20px 0 15px; letter-spacing: 1px; }
 
-/* AREA DE MENSAJES */
 .status-area { min-height: 45px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 .status-msg { width: 100%; text-align: center; font-weight: 700; padding: 12px; border-radius: 10px; font-size: 15px; line-height: 1.4; animation: popIn 0.2s ease; }
 @keyframes popIn { 0% { opacity:0; transform:scale(0.95); } 100% { opacity:1; transform:scale(1); } }
 .status-msg.success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0;}
-.status-msg.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca;}
+.status-msg.error   { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca;}
 .status-msg.loading { color: #4b5563; font-weight: 600; background: #f3f4f6; border: 1px solid #e5e7eb;}
 
-/* PANEL SUPERVISOR */
-.panelLegend{ font-size:12px; color:#4b5563; margin-bottom:15px; background:white; padding:12px; border-radius:12px; text-align:center; border: 1px solid #f3f4f6; width: 100%; max-width: 480px;}
-.search-bar { border: 2px solid #e5e7eb; border-radius: 12px; padding: 14px; font-weight: 600; font-size: 15px; background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236b7280" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>') no-repeat 15px center; padding-left: 40px; margin-bottom: 20px;}
+/* PANEL */
+.search-bar { border: 2px solid #e5e7eb; border-radius: 12px; padding: 14px; font-weight: 600; font-size: 15px; padding-left: 16px; margin-bottom: 20px;}
 .search-bar:focus { border-color: #2563eb; }
-.panel-card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #e5e7eb; width: 100%; max-width: 480px;}
-.pc-header { border-bottom: 2px solid #f3f4f6; padding-bottom: 10px; margin-bottom: 10px; text-align: center; }
-.pc-name { font-weight: 800; font-size: 16px; line-height: 1.2; color: #111827;}
-.pc-sub { font-size: 13px; color: #6b7280; font-weight: 600; margin-top: 4px; }
-.pc-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #f3f4f6; }
+.panel-card { background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #e5e7eb; width: 100%; max-width: 480px;}
+.pc-header { border-bottom: 2px solid #f3f4f6; padding-bottom: 10px; margin-bottom: 10px; }
+.pc-name { font-weight: 800; font-size: 15px; line-height: 1.2; color: #111827;}
+.pc-sub  { font-size: 12px; color: #6b7280; font-weight: 600; margin-top: 3px; }
+.pc-row  { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px dashed #f3f4f6; }
 .pc-row:last-child { border-bottom: none; padding-bottom: 0; }
 .pc-label { font-weight: 600; color: #6b7280; font-size: 13px; }
-.pc-val { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; color: #111827;}
-.st-A{ color: #166534; } .st-T{ color: #d97706; } .st-F{ color: #991b1b; }
-.tdSelect{ padding:6px 8px; font-size:14px; margin:0; border:1px solid #d1d5db; background:#f9fafb; font-weight: 700; border-radius: 8px; outline: none; text-align: center;}
-.tdBtn{ width:36px; height:36px; padding:0; background:#f3f4f6; border: 1px solid #e5e7eb; border-radius:8px; font-size:16px; display:inline-flex; align-items:center; justify-content:center; color: #111;}
+.pc-val   { font-weight: 700; font-size: 13px; color: #111827; }
+.badge-entrada  { background:#dcfce7; color:#166534; padding:2px 8px; border-radius:20px; font-size:12px; font-weight:800; }
+.badge-salida   { background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:20px; font-size:12px; font-weight:800; }
+.badge-refrig   { background:#fef3c7; color:#92400e; padding:2px 8px; border-radius:20px; font-size:12px; font-weight:800; }
+.badge-sinmarcar{ background:#f3f4f6; color:#6b7280;  padding:2px 8px; border-radius:20px; font-size:12px; font-weight:800; }
+.tarde-chip { background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:20px; font-size:12px; font-weight:800; margin-left:6px; }
 
-/* MÓDULO TARDANZAS */
-.tard-label { font-size: 13px; font-weight: 700; color: #6b7280; display: block; margin-bottom: 4px; text-align: left; }
+/* TARDANZAS */
+.tard-label   { font-size: 13px; font-weight: 700; color: #6b7280; display: block; margin-bottom: 4px; text-align: left; }
 .tard-resumen { background: white; border-radius: 18px; padding: 20px; box-shadow: 0 10px 35px rgba(0,0,0,.06); margin-bottom: 20px; width: 100%; max-width: 480px; text-align: center; border: 2px solid #fee2e2; }
-.tard-total-num { font-size: 52px; font-weight: 900; color: #991b1b; line-height: 1; }
+.tard-total-num  { font-size: 52px; font-weight: 900; color: #991b1b; line-height: 1; }
 .tard-total-cero { color: #166534; }
-.tard-total-label { font-size: 12px; color: #9ca3af; font-weight: 600; margin-top: 4px; }
-.tard-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 13px; font-weight: 800; }
+.tard-total-label{ font-size: 12px; color: #9ca3af; font-weight: 600; margin-top: 4px; }
+.tard-badge       { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 13px; font-weight: 800; }
 .tard-badge-alto  { background: #fee2e2; color: #991b1b; }
 .tard-badge-medio { background: #fef3c7; color: #92400e; }
 .tard-badge-bajo  { background: #dcfce7; color: #166534; }
-
-/* MODAL LIGERO */
-.modalMask { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px; }
-.modalMask.show { display: flex; }
-.modalBox { background: white; width: 100%; max-width: 380px; border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);}
-.modalBtns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;}
-.btnDanger { background: #fee2e2; color: #991b1b; border:none; }
 </style>
 </head>
 
 <body>
-
-<audio id="sndClick"   src="https://actions.google.com/sounds/v1/ui/button_click.ogg"       preload="auto"></audio>
-<audio id="sndSuccess" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"      preload="auto"></audio>
+<audio id="sndSuccess" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"        preload="auto"></audio>
 <audio id="sndError"   src="https://actions.google.com/sounds/v1/alarms/mechanical_buzzer.ogg" preload="auto"></audio>
+<audio id="sndClick"   src="https://actions.google.com/sounds/v1/ui/button_click.ogg"          preload="auto"></audio>
 
-<!-- ===================== LOGIN ===================== -->
+<!-- LOGIN -->
 <div class="wrapper" id="loginWrap">
-  <div class="card text-center" style="margin-top: 5vh;">
-    <div class="sucursal-title">REY LIMA</div>
+  <div class="card text-center" style="margin-top:5vh;">
+    <div class="sucursal-title js-sucursal"></div>
     <div class="login-subtitle">Acceso al Sistema</div>
     <input type="password" id="pin" placeholder="Ingresa tu PIN" inputmode="numeric">
     <button onclick="iniciarSesion()">Ingresar</button>
   </div>
 </div>
 
-<!-- ===================== APP ===================== -->
-<div id="app" style="display:none; width: 100%;">
+<!-- APP -->
+<div id="app" style="display:none; width:100%;">
 
   <header class="topbar">
     <button class="menuBtn" onclick="toggleSidebar()">☰</button>
     <div class="topbar-titles">
       <div class="topbar-title" id="topbarTitle">Registro QR</div>
-      <div class="topbar-sub">REY LIMA</div>
+      <div class="topbar-sub js-sucursal"></div>
     </div>
     <div class="topbar-spacer"></div>
   </header>
 
   <div id="sidebarBackdrop" onclick="toggleSidebar()"></div>
-
   <nav id="sidebar">
-    <div class="sideHeader">REY LIMA</div>
+    <div class="sideHeader js-sucursal"></div>
     <button id="btnNavQR"        class="sideItem active" onclick="switchView('qr')">📸 Escáner QR</button>
-    <button id="btnNavPanel"     class="sideItem"        onclick="switchView('panel')">📊 Panel Supervisor</button>
+    <button id="btnNavPanel"     class="sideItem"        onclick="switchView('panel')">📊 Panel Hoy</button>
     <button id="btnNavTardanzas" class="sideItem"        onclick="switchView('tardanzas')">⏰ Tardanzas</button>
-    <div style="flex-grow: 1;"></div>
-    <button class="sideItem" style="color: #991b1b;" onclick="cerrarSesion()">🚪 Cerrar Sesión</button>
+    <div style="flex-grow:1;"></div>
+    <button class="sideItem" style="color:#991b1b;" onclick="cerrarSesion()">🚪 Cerrar Sesión</button>
   </nav>
 
   <div class="wrapper">
 
-    <!-- ====== VISTA: ESCÁNER QR ====== -->
-    <div id="viewQR" style="width: 100%;">
-      <div class="card text-center" style="margin: auto;">
+    <!-- ESCÁNER QR -->
+    <div id="viewQR" style="width:100%;">
+      <div class="card text-center" style="margin:auto;">
         <h2 class="view-title">Registro de Asistencia</h2>
         <select id="tipo">
           <option value="">Seleccionar tipo</option>
@@ -160,550 +143,475 @@ button:active { transform: scale(0.96); background:#1f2937; }
       </div>
     </div>
 
-    <!-- ====== VISTA: PANEL SUPERVISOR ====== -->
-    <div id="viewPanel" style="display:none; width: 100%; max-width: 480px; margin: auto;">
-      <button onclick="loadPanelData()" class="btn-refresh">🔄 Cargar / Actualizar Datos</button>
-      <div class="panelLegend">
-        <strong>Estados:</strong> A:Asistió, T:Tarde, F:Falta, V:Vacaciones, DL:Día Libre, DM:Descanso Médico, S:Suspensión.
-      </div>
-      <input type="text" id="buscadorPanel" class="search-bar" placeholder="Buscar colaborador..." onkeyup="filtrarPanel()">
-      <div id="panelCardsContainer" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-        <div class="card text-center" style="font-weight:600; color:#4b5563; box-shadow:none; border: 1px solid #e5e7eb;">Usa el botón para cargar los datos.</div>
+    <!-- PANEL HOY -->
+    <div id="viewPanel" style="display:none; width:100%; max-width:480px; margin:auto;">
+      <button onclick="loadPanel()" class="btn-refresh">🔄 Cargar / Actualizar</button>
+      <input type="text" id="buscadorPanel" class="search-bar" placeholder="🔍 Buscar colaborador..." oninput="filtrarPanel()">
+      <div id="panelContainer" style="display:flex; flex-direction:column; align-items:center; width:100%;">
+        <div class="card text-center" style="font-weight:600; color:#4b5563; box-shadow:none; border:1px solid #e5e7eb;">
+          Usa el botón para cargar la asistencia de hoy.
+        </div>
       </div>
     </div>
 
-    <!-- ====== VISTA: TARDANZAS ====== -->
-    <div id="viewTardanzas" style="display:none; width: 100%; max-width: 480px; margin: auto;">
-
-      <!-- Filtros -->
+    <!-- TARDANZAS -->
+    <div id="viewTardanzas" style="display:none; width:100%; max-width:480px; margin:auto;">
       <div class="card">
         <h2 class="view-title">Reporte de Tardanzas</h2>
 
-        <label class="tard-label">Colaborador</label>
-        <select id="tardanzaColab" style="margin-bottom:16px;">
-          <option value="">⏳ Cargando colaboradores...</option>
+        <label class="tard-label">Colaborador (opcional)</label>
+        <select id="tardColab" style="margin-bottom:16px;">
+          <option value="">— Todos —</option>
         </select>
 
         <label class="tard-label">Desde</label>
-        <input type="date" id="tardanzaDesde" style="margin-bottom:16px;">
+        <input type="date" id="tardDesde" style="margin-bottom:16px;">
 
         <label class="tard-label">Hasta</label>
-        <input type="date" id="tardanzaHasta" style="margin-bottom:16px;">
+        <input type="date" id="tardHasta" style="margin-bottom:16px;">
 
-        <button id="btnConsultarTardanzas" onclick="consultarTardanzas()" style="background:#2563eb;">🔍 Consultar</button>
-
-        <div id="tardanzaStatus" class="status-area" style="display:none;"></div>
+        <button onclick="consultarTardanzas()" id="btnTard" style="background:#2563eb;">🔍 Consultar</button>
+        <div id="tardStatus" class="status-area" style="display:none;"></div>
       </div>
 
-      <!-- Tarjeta resumen total (oculta hasta consultar) -->
-      <div id="tardanzaResumenCard" class="tard-resumen" style="display:none;">
+      <div id="tardResumen" class="tard-resumen" style="display:none;">
         <div style="font-size:12px; font-weight:700; color:#6b7280; margin-bottom:6px; text-transform:uppercase; letter-spacing:1px;">Total minutos de tardanza</div>
-        <div id="tardanzaTotalMin" class="tard-total-num">0</div>
-        <div class="tard-total-label" id="tardanzaTotalSub">minutos acumulados en el período</div>
-        <div id="tardanzaNombreResumen" style="margin-top:10px; font-size:13px; font-weight:700; color:#374151;"></div>
+        <div id="tardTotal" class="tard-total-num">0</div>
+        <div id="tardSub" class="tard-total-label"></div>
+        <div id="tardNombre" style="margin-top:10px; font-size:13px; font-weight:700; color:#374151;"></div>
       </div>
 
-      <!-- Listado de registros -->
-      <div id="tardanzaCardsContainer" style="display:flex; flex-direction:column; align-items:center; width:100%;"></div>
-
+      <div id="tardContainer" style="display:flex; flex-direction:column; align-items:center; width:100%;"></div>
     </div>
 
-  </div>
-</div>
-
-<!-- ===================== MODAL ===================== -->
-<div id="modalMask" class="modalMask">
-  <div class="modalBox">
-    <h2 id="modalTitle" style="text-align:center; margin-top:0; font-weight:800; color:#111827;">Editar</h2>
-    <input id="modalInput" type="text" autocomplete="off" style="text-align:center; font-weight:800; font-size:24px;">
-    <textarea id="modalArea" style="display:none; width:100%; min-height:100px; padding:15px; border-radius:12px; border:1px solid #d1d5db; outline:none; font-size:15px; font-family:inherit; text-align: center;"></textarea>
-    <div class="modalBtns">
-      <button class="btnDanger" onclick="closeModal()">Cancelar</button>
-      <button onclick="guardarModal()" style="background:#2563eb; color:white;">Guardar</button>
-    </div>
   </div>
 </div>
 
 <script>
-// ==========================================
-// CONFIGURACIÓN PRINCIPAL
-// ==========================================
-const API = "https://script.google.com/macros/s/AKfycbyPNBTbS4XmjleMd5sUQexpYlmJWiPOMm6nR85J5PfpeS-yoKIpGjJgmRFrIjO_8C5N/exec";
-let sessionToken = null;
+// ============================================================
+// ⚙️  SOLO CAMBIA ESTA LÍNEA POR SUCURSAL
+// ============================================================
+var SUCURSAL = 'REY LIMA';
+// Ejemplos: 'REY HUANCAYO' | 'VILLA MARIA' | 'SAN MARTIN'
 
-// ==========================================
-// MODO BALA: BASE DE DATOS ESPEJO
-// ==========================================
-let dbEspejo = { byEid: {}, byDoc: {} };
-let marcacionesLocales = {};
+// Hora de entrada esperada para calcular tardanzas
+var HORA_CORTE = '08:00';
+
+// ── NO TOCAR LO DE ABAJO ────────────────────────────────────
+var API      = 'http://localhost:3000/api/qr';   // ← cambia al dominio real al desplegar
+var API_KEY  = 'c134a884f5188bdb0c4863475d956764';
+// ────────────────────────────────────────────────────────────
+
+// Rellenar nombre de sucursal en HTML
+document.querySelectorAll('.js-sucursal').forEach(function(el){ el.textContent = SUCURSAL; });
+document.title = 'Asistencia QR - ' + SUCURSAL;
+
+// ============================================================
+// ESPEJO LOCAL (caché de colaboradores para Modo Bala)
+// ============================================================
+var ESPEJO_KEY = 'espejo_' + SUCURSAL.replace(/ /g,'_');
+var dbEspejo   = { byEid: {}, byDoc: {} };
+var marcLocales = {};
 
 function cargarEspejo() {
-  const localData = localStorage.getItem('dbEspejo_ReyLima');
-  if (localData) dbEspejo = JSON.parse(localData);
-  fetch(API, { method: "POST", body: JSON.stringify({ action: "sync_espejo" }) })
-    .then(r => r.json())
-    .then(res => {
+  var local = localStorage.getItem(ESPEJO_KEY);
+  if (local) { try { dbEspejo = JSON.parse(local); } catch(e) {} }
+
+  fetch(API + '/espejo?sucursalNombre=' + encodeURIComponent(SUCURSAL) + '&apiKey=' + API_KEY)
+    .then(function(r){ return r.json(); })
+    .then(function(res){
       if (res.ok && res.data) {
         dbEspejo = res.data;
-        localStorage.setItem('dbEspejo_ReyLima', JSON.stringify(dbEspejo));
+        localStorage.setItem(ESPEJO_KEY, JSON.stringify(dbEspejo));
       }
-    }).catch(() => {});
+    }).catch(function(){});
 }
 cargarEspejo();
 
-// ==========================================
+// ============================================================
 // AUDIO
-// ==========================================
+// ============================================================
 function playAudio(tipo) {
-  try {
-    const snd = document.getElementById(tipo === 'exito' ? 'sndSuccess' : tipo === 'error' ? 'sndError' : 'sndClick');
-    if (snd) {
-      snd.currentTime = 0; snd.volume = 1.0;
-      let p = snd.play();
-      if (p !== undefined) p.catch(e => { if (tipo === 'error') playFallbackBeep(); });
-    }
-  } catch(e) {}
-}
-function playFallbackBeep() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    osc.type = 'sawtooth'; osc.frequency.value = 150;
-    osc.connect(ctx.destination);
-    osc.start(); osc.stop(ctx.currentTime + 0.3);
-  } catch(e) {}
+  var id = tipo === 'exito' ? 'sndSuccess' : tipo === 'error' ? 'sndError' : 'sndClick';
+  var s  = document.getElementById(id);
+  if (!s) return;
+  s.currentTime = 0; s.volume = 1.0;
+  var p = s.play();
+  if (p) p.catch(function(){});
 }
 
-// ==========================================
-// SESIÓN
-// ==========================================
+// ============================================================
+// SESIÓN / LOGIN
+// ============================================================
 function iniciarSesion() {
-  const pin = document.getElementById('pin').value.trim();
-  if (!pin) return alert("Ingrese el PIN");
-  const btn = document.querySelector('#loginWrap button');
-  btn.innerText = "Verificando..."; btn.disabled = true;
-  fetch(API, { method: "POST", body: JSON.stringify({ action: 'login_panel', pin: pin }) })
-    .then(res => res.json()).then(data => {
-      btn.innerText = "Ingresar"; btn.disabled = false;
+  var pin = document.getElementById('pin').value.trim();
+  if (!pin) return alert('Ingrese el PIN');
+  var btn = document.querySelector('#loginWrap button');
+  btn.innerText = 'Verificando...'; btn.disabled = true;
+
+  fetch(API + '/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ pin: pin, sucursalNombre: SUCURSAL, apiKey: API_KEY })
+  })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      btn.innerText = 'Ingresar'; btn.disabled = false;
       if (data.ok) {
-        sessionToken = data.token;
         document.getElementById('loginWrap').style.display = 'none';
         document.getElementById('app').style.display = 'block';
         document.getElementById('pin').value = '';
         cargarEspejo();
-      } else { alert("PIN Incorrecto"); }
-    }).catch(() => { btn.innerText = "Ingresar"; btn.disabled = false; alert("Error de red"); });
+        cargarColaboradoresTard();
+      } else {
+        alert('PIN incorrecto');
+      }
+    })
+    .catch(function(){ btn.innerText = 'Ingresar'; btn.disabled = false; alert('Error de red'); });
 }
 
 function cerrarSesion() {
-  if (confirm("¿Seguro que deseas salir?")) {
-    sessionToken = null;
-    colaboradoresTardanzaCargados = false;
-    document.getElementById('app').style.display = 'none';
-    document.getElementById('loginWrap').style.display = 'block';
-    toggleSidebar(false); detenerQR();
-  }
+  if (!confirm('¿Seguro que deseas salir?')) return;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginWrap').style.display = 'block';
+  toggleSidebar(true); detenerQR();
+  marcLocales = {};
 }
 
-// ==========================================
+// ============================================================
 // NAVEGACIÓN
-// ==========================================
-function toggleSidebar(forceClose = false) {
-  const sidebar  = document.getElementById('sidebar');
-  const backdrop = document.getElementById('sidebarBackdrop');
-  if (sidebar.classList.contains('open') || forceClose) {
-    sidebar.classList.remove('open'); backdrop.classList.remove('open');
+// ============================================================
+function toggleSidebar(forceClose) {
+  var sb = document.getElementById('sidebar');
+  var bd = document.getElementById('sidebarBackdrop');
+  if (sb.classList.contains('open') || forceClose) {
+    sb.classList.remove('open'); bd.classList.remove('open');
   } else {
-    sidebar.classList.add('open'); backdrop.classList.add('open');
+    sb.classList.add('open'); bd.classList.add('open');
   }
 }
 
-function switchView(viewName) {
-  // Ocultar todas las vistas
-  document.getElementById('viewQR').style.display        = 'none';
-  document.getElementById('viewPanel').style.display     = 'none';
-  document.getElementById('viewTardanzas').style.display = 'none';
-  // Quitar active de todos los botones
-  document.getElementById('btnNavQR').classList.remove('active');
-  document.getElementById('btnNavPanel').classList.remove('active');
-  document.getElementById('btnNavTardanzas').classList.remove('active');
+function switchView(v) {
+  ['viewQR','viewPanel','viewTardanzas'].forEach(function(id){
+    document.getElementById(id).style.display = 'none';
+  });
+  ['btnNavQR','btnNavPanel','btnNavTardanzas'].forEach(function(id){
+    document.getElementById(id).classList.remove('active');
+  });
 
-  if (viewName === 'qr') {
+  if (v === 'qr') {
     document.getElementById('viewQR').style.display = 'block';
     document.getElementById('btnNavQR').classList.add('active');
-    document.getElementById('topbarTitle').innerText = "Registro QR";
-
-  } else if (viewName === 'panel') {
+    document.getElementById('topbarTitle').innerText = 'Registro QR';
+  } else if (v === 'panel') {
     document.getElementById('viewPanel').style.display = 'block';
     document.getElementById('btnNavPanel').classList.add('active');
-    document.getElementById('topbarTitle').innerText = "Panel Supervisor";
+    document.getElementById('topbarTitle').innerText = 'Panel Hoy';
     detenerQR();
-
-  } else if (viewName === 'tardanzas') {
+  } else if (v === 'tardanzas') {
     document.getElementById('viewTardanzas').style.display = 'block';
     document.getElementById('btnNavTardanzas').classList.add('active');
-    document.getElementById('topbarTitle').innerText = "Tardanzas";
+    document.getElementById('topbarTitle').innerText = 'Tardanzas';
     detenerQR();
-    cargarColaboradoresTardanzas();
   }
-
   toggleSidebar(true);
 }
 
-function mostrarMensaje(texto, estilo) {
-  const area = document.getElementById("mensajeArea");
-  area.style.display = "flex";
-  area.innerHTML = `<div class="status-msg ${estilo}">${texto}</div>`;
-  if (estilo !== 'loading') setTimeout(() => { area.style.display = "none"; }, 3500);
+function mostrarMsg(texto, estilo) {
+  var a = document.getElementById('mensajeArea');
+  a.style.display = 'flex';
+  a.innerHTML = '<div class="status-msg ' + estilo + '">' + texto + '</div>';
+  if (estilo !== 'loading') setTimeout(function(){ a.style.display = 'none'; }, 3500);
 }
 
-// ==========================================
-// CÁMARA
-// ==========================================
-let qr; let camaraActiva = false; let ultimoQR = ""; let ultimoTiempo = 0;
+// ============================================================
+// CÁMARA QR
+// ============================================================
+var qrReader; var camaraActiva = false; var ultimoQR = ''; var ultimoT = 0;
+
 function toggleCamara() { camaraActiva ? detenerQR() : iniciarQR(); }
 
 function iniciarQR() {
-  qr = new Html5Qrcode("qr-reader");
-  document.getElementById("qr-reader").style.display = "block";
-  document.getElementById("btnCamara").innerText = "🛑 Detener Cámara";
-  document.getElementById("btnCamara").style.background = "#991b1b";
+  qrReader = new Html5Qrcode('qr-reader');
+  document.getElementById('qr-reader').style.display = 'block';
+  document.getElementById('btnCamara').innerText = '🛑 Detener Cámara';
+  document.getElementById('btnCamara').style.background = '#991b1b';
   camaraActiva = true;
-  qr.start(
-    { facingMode: "environment" },
+  qrReader.start(
+    { facingMode: 'environment' },
     { fps: 15, qrbox: { width: 230, height: 230 }, disableFlip: true },
-    (decodedText) => {
-      const ahora = Date.now();
-      if (decodedText === ultimoQR && ahora - ultimoTiempo < 2000) return;
-      ultimoQR = decodedText; ultimoTiempo = ahora;
+    function(decoded) {
+      var ahora = Date.now();
+      if (decoded === ultimoQR && ahora - ultimoT < 2000) return;
+      ultimoQR = decoded; ultimoT = ahora;
       playAudio('click');
-      registrar(decodedText.trim(), "QR", "");
+      registrar(decoded.trim(), 'QR', '');
     }
-  ).catch(() => { mostrarMensaje("⚠️ Da acceso a la cámara.", "error"); detenerQR(); });
+  ).catch(function(){ mostrarMsg('⚠️ Da acceso a la cámara.', 'error'); detenerQR(); });
 }
 
 function detenerQR() {
-  if (qr) {
-    qr.stop().then(() => {
-      document.getElementById("qr-reader").style.display = "none";
-      document.getElementById("btnCamara").innerText = "📸 Iniciar Cámara";
-      document.getElementById("btnCamara").style.background = "#2563eb";
+  if (qrReader) {
+    qrReader.stop().then(function(){
+      document.getElementById('qr-reader').style.display = 'none';
+      document.getElementById('btnCamara').innerText = '📸 Iniciar Cámara';
+      document.getElementById('btnCamara').style.background = '#2563eb';
       camaraActiva = false;
-    }).catch(() => {});
+    }).catch(function(){});
   }
 }
 
 function registrarManual() {
-  const dni = document.getElementById("dniManual").value.trim();
-  const obs = document.getElementById("observacion").value.trim();
-  registrar(dni, "Manual", obs);
+  var dni = document.getElementById('dniManual').value.trim();
+  var obs = document.getElementById('observacion').value.trim();
+  registrar(dni, 'Manual', obs);
 }
 
-// ==========================================
-// REGISTRO MODO BALA
-// ==========================================
+// ============================================================
+// REGISTRO
+// ============================================================
 function registrar(valor, origen, obs) {
-  const tipo = document.getElementById("tipo").value;
-  if (!tipo)  { playAudio('error'); mostrarMensaje("⚠️ Selecciona tipo de asistencia", "error"); return; }
-  if (!valor) { playAudio('error'); mostrarMensaje("⚠️ Ingrese QR/DNI", "error"); return; }
+  var tipo = document.getElementById('tipo').value;
+  if (!tipo)  { playAudio('error'); mostrarMsg('⚠️ Selecciona tipo de asistencia', 'error'); return; }
+  if (!valor) { playAudio('error'); mostrarMsg('⚠️ Ingrese QR o DNI', 'error'); return; }
 
-  let emp = null;
-  if (origen === "Manual") {
-    emp = dbEspejo.byDoc[valor.replace(/\D/g, '').trim()];
-  } else {
-    emp = dbEspejo.byEid[valor.trim()];
-  }
+  // Buscar en caché local para respuesta instantánea
+  var emp = (origen === 'Manual')
+    ? dbEspejo.byDoc[valor.replace(/\D/g,'').trim()]
+    : dbEspejo.byEid[valor.trim()];
 
-  if (!emp) { ejecutarRegistroServidor(valor, origen, obs, tipo); return; }
-
-  const hoy    = new Date().toISOString().split('T')[0];
-  const dupKey = `${hoy}_${emp.doc}_${tipo}`;
-  if (marcacionesLocales[dupKey]) {
-    playAudio('error'); mostrarMensaje(`⚠️ Ya registraste "${tipo}" hoy.`, "error"); return;
-  }
-
-  marcacionesLocales[dupKey] = true;
-  playAudio('exito');
-  mostrarMensaje(`✔ REGISTRADO<br>${emp.nombre}`, "success");
-  document.getElementById("dniManual").value  = "";
-  document.getElementById("observacion").value = "";
-
-  fetch(API, { method: "POST", body: JSON.stringify({ action: "registrar_qr", dni: valor, tipo: tipo, origen: origen, observacion: obs }) })
-    .then(res => res.json())
-    .then(data => {
-      if (!data.ok) {
-        delete marcacionesLocales[dupKey];
-        playAudio('error');
-        mostrarMensaje(`❌ Error del sistema: ${data.msg}`, "error");
-      }
-    })
-    .catch(() => {
-      delete marcacionesLocales[dupKey];
-      playAudio('error');
-      mostrarMensaje("❌ Error guardando en Google.", "error");
-    });
-}
-
-function ejecutarRegistroServidor(valor, origen, obs, tipo) {
-  mostrarMensaje("Buscando en Servidor... 🚀", "loading");
-  fetch(API, { method: "POST", body: JSON.stringify({ action: "registrar_qr", dni: valor, tipo: tipo, origen: origen, observacion: obs }) })
-    .then(res => res.json())
-    .then(data => {
-      if (data.ok) {
-        playAudio('exito');
-        mostrarMensaje(`✔ REGISTRADO<br>${data.show.nombre}`, "success");
-        document.getElementById("dniManual").value  = "";
-        document.getElementById("observacion").value = "";
-      } else {
-        playAudio('error'); mostrarMensaje(`❌ ${data.msg}`, "error");
-      }
-    })
-    .catch(() => { playAudio('error'); mostrarMensaje("❌ Error de internet.", "error"); });
-}
-
-// ==========================================
-// PANEL SUPERVISOR
-// ==========================================
-let editContext = null; let modalMode = null;
-
-function loadPanelData() {
-  document.getElementById('buscadorPanel').value = '';
-  const container = document.getElementById('panelCardsContainer');
-  container.innerHTML = '<div class="card text-center" style="font-weight:600; color:#2563eb; border: 1px solid #bfdbfe; background:#eff6ff;">⏳ Descargando últimos registros...</div>';
-  fetch(API, { method: "POST", body: JSON.stringify({ action: 'get_panel', token: sessionToken }) })
-    .then(res => res.json()).then(res => {
-      if (!res.ok) { container.innerHTML = `<div class="card text-center" style="color:#991b1b; font-weight:bold;">❌ Error: ${res.msg}</div>`; return; }
-      renderPanelCards(res.rows, res.estados);
-    }).catch(() => {
-      container.innerHTML = '<div class="card text-center" style="color:#991b1b; font-weight:bold;">❌ Error de conexión</div>';
-    });
-}
-
-function renderPanelCards(rows, estados) {
-  const container = document.getElementById('panelCardsContainer');
-  container.innerHTML = '';
-  if (!rows || rows.length === 0) {
-    container.innerHTML = '<div class="card text-center" style="font-weight:600; color:#6b7280; box-shadow:none; border: 1px solid #e5e7eb;">No hay registros recientes.</div>';
+  if (!emp) {
+    // No está en caché → ir al servidor y esperar
+    enviarAlServidor(valor, origen, obs, tipo, null);
     return;
   }
-  rows.reverse().forEach(r => {
-    const card = document.createElement('div');
-    card.className = 'panel-card';
-    let html = `
-      <div class="pc-header">
-        <div class="pc-name">${r.colab}</div>
-        <div class="pc-sub">[${r.estado}] ${r.tipo || 'Sin Marcación'}</div>
-      </div>
-      <div class="pc-row">
-        <span class="pc-label">Tareo Actual:</span>
-        <span class="pc-val st-${r.tareo}">${r.tareo || 'Ninguno'}</span>
-      </div>
-      <div class="pc-row">
-        <span class="pc-label">Min. Tardanza:</span>
-        <span class="pc-val" style="color:${r.min > 0 ? '#991b1b' : 'inherit'}">${r.min || '0'}</span>
-      </div>`;
-    card.innerHTML = html;
 
-    const rowT = document.createElement('div'); rowT.className = 'pc-row';
-    rowT.innerHTML = `<span class="pc-label">Editar Tareo:</span>`;
-    const sel = document.createElement('select'); sel.className = 'tdSelect';
-    estados.forEach(e => {
-      const opt = document.createElement('option'); opt.value = e; opt.textContent = e || '-';
-      if (r.newT === e) opt.selected = true; sel.appendChild(opt);
+  // Está en caché → mostrar éxito al instante, enviar al servidor en background
+  var hoy    = new Date().toISOString().split('T')[0];
+  var dupKey = hoy + '_' + emp.doc + '_' + tipo;
+  if (marcLocales[dupKey]) {
+    playAudio('error'); mostrarMsg('⚠️ Ya registraste "' + tipo + '" hoy.', 'error'); return;
+  }
+  marcLocales[dupKey] = true;
+  playAudio('exito');
+  mostrarMsg('✔ REGISTRADO<br>' + emp.nombre, 'success');
+  document.getElementById('dniManual').value   = '';
+  document.getElementById('observacion').value = '';
+
+  // Enviar en background (sin bloquear UI)
+  enviarAlServidor(valor, origen, obs, tipo, dupKey);
+}
+
+function enviarAlServidor(valor, origen, obs, tipo, dupKey) {
+  if (dupKey === null) mostrarMsg('Buscando... 🚀', 'loading');
+
+  var payload = (origen === 'Manual')
+    ? { dni: valor.replace(/\D/g,'').trim(), tipo: tipo, sucursalNombre: SUCURSAL, apiKey: API_KEY }
+    : { eid: valor.trim(),                   tipo: tipo, sucursalNombre: SUCURSAL, apiKey: API_KEY };
+  if (obs) payload.observacion = obs;
+
+  fetch(API + '/registrar', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.ok) {
+        if (dupKey === null) {
+          // Fue modo servidor (no caché), mostrar éxito ahora
+          playAudio('exito');
+          mostrarMsg('✔ REGISTRADO<br>' + data.nombre, 'success');
+          document.getElementById('dniManual').value   = '';
+          document.getElementById('observacion').value = '';
+        }
+        // Si fue modo caché: el éxito ya se mostró, no hacer nada
+      } else {
+        if (dupKey) delete marcLocales[dupKey];
+        playAudio('error');
+        mostrarMsg('❌ ' + data.message, 'error');
+      }
+    })
+    .catch(function(){
+      if (dupKey === null) {
+        playAudio('error'); mostrarMsg('❌ Error de internet.', 'error');
+      }
+      // Si fue modo caché: aceptamos que pueda haber fallado, el supervisor revisará en el panel
     });
-    if (r.remG <= 0) sel.disabled = true;
-    sel.onchange = () => {
-      sel.disabled = true;
-      fetch(API, { method: "POST", body: JSON.stringify({ action: 'update_cell', token: sessionToken, fila: r.fila, colLetra: 'G', valor: sel.value }) })
-        .then(res => res.json()).then(res => {
-          if (!res.unchanged && res.remaining <= 0) sel.disabled = true; else sel.disabled = false;
-        }).catch(() => { alert("Error al guardar"); sel.value = r.newT; sel.disabled = false; });
-    };
-    const wrapSel = document.createElement('span'); wrapSel.className = 'pc-val'; wrapSel.appendChild(sel);
-    rowT.appendChild(wrapSel); card.appendChild(rowT);
+}
 
-    const rowM = document.createElement('div'); rowM.className = 'pc-row';
-    rowM.innerHTML = `<span class="pc-label">Editar Minutos:</span>`;
-    const wrapM = document.createElement('span'); wrapM.className = 'pc-val';
-    wrapM.appendChild(createEditBtn(r.newM, r.remH, 'H', r.fila, true));
-    rowM.appendChild(wrapM); card.appendChild(rowM);
+// ============================================================
+// PANEL HOY
+// ============================================================
+function loadPanel() {
+  var container = document.getElementById('panelContainer');
+  document.getElementById('buscadorPanel').value = '';
+  container.innerHTML = '<div class="card text-center" style="color:#2563eb; border:1px solid #bfdbfe; background:#eff6ff; font-weight:600;">⏳ Cargando asistencia de hoy...</div>';
 
-    const rowO = document.createElement('div'); rowO.className = 'pc-row';
-    rowO.innerHTML = `<span class="pc-label">Observación:</span>`;
-    const wrapO = document.createElement('span'); wrapO.className = 'pc-val';
-    wrapO.appendChild(createEditBtn(r.obs, r.remI, 'I', r.fila, false));
-    rowO.appendChild(wrapO); card.appendChild(rowO);
+  fetch(API + '/panel?sucursalNombre=' + encodeURIComponent(SUCURSAL) +
+        '&apiKey=' + API_KEY +
+        '&horaCorte=' + encodeURIComponent(HORA_CORTE))
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res.ok) {
+        container.innerHTML = '<div class="card text-center" style="color:#991b1b; font-weight:700;">❌ ' + res.message + '</div>';
+        return;
+      }
+      renderPanel(res.rows);
+    })
+    .catch(function(){
+      container.innerHTML = '<div class="card text-center" style="color:#991b1b; font-weight:700;">❌ Error de conexión</div>';
+    });
+}
+
+function tipoBadge(tipo) {
+  if (!tipo) return '<span class="badge-sinmarcar">Sin marcar</span>';
+  if (tipo.indexOf('ENTRADA') === 0 && tipo.indexOf('REFRIG') === -1) return '<span class="badge-entrada">ENTRADA</span>';
+  if (tipo === 'SALIDA') return '<span class="badge-salida">SALIDA</span>';
+  return '<span class="badge-refrig">' + tipo.replace('_',' ') + '</span>';
+}
+
+function renderPanel(rows) {
+  var container = document.getElementById('panelContainer');
+  container.innerHTML = '';
+  if (!rows || rows.length === 0) {
+    container.innerHTML = '<div class="card text-center" style="font-weight:600; color:#6b7280;">Sin colaboradores activos.</div>';
+    return;
+  }
+  rows.forEach(function(r) {
+    var card = document.createElement('div');
+    card.className = 'panel-card';
+
+    var mjs = r.marcajes.map(function(m){
+      return '<span style="font-size:12px; margin-right:6px;">' + m.hora + ' ' + tipoBadge(m.tipo) + '</span>';
+    }).join('');
+
+    card.innerHTML =
+      '<div class="pc-header">' +
+        '<div class="pc-name">' + r.nombre + '</div>' +
+        '<div class="pc-sub">' + (r.dni || '') + (r.eid ? ' · QR: ' + r.eid : '') + '</div>' +
+      '</div>' +
+      '<div class="pc-row">' +
+        '<span class="pc-label">Último estado</span>' +
+        '<span class="pc-val">' + tipoBadge(r.ultimoTipo) +
+          (r.minTarde > 0 ? '<span class="tarde-chip">+' + r.minTarde + ' min</span>' : '') +
+        '</span>' +
+      '</div>' +
+      (r.marcajes.length > 0
+        ? '<div class="pc-row"><span class="pc-label">Marcajes</span><span class="pc-val" style="flex-wrap:wrap; gap:4px; justify-content:flex-end;">' + mjs + '</span></div>'
+        : '') ;
 
     container.appendChild(card);
   });
 }
 
 function filtrarPanel() {
-  const input   = document.getElementById('buscadorPanel').value.toLowerCase();
-  const tarjetas = document.querySelectorAll('#panelCardsContainer .panel-card');
-  tarjetas.forEach(t => {
-    const nombre = t.querySelector('.pc-name').textContent.toLowerCase();
-    t.style.display = nombre.includes(input) ? 'block' : 'none';
+  var q = document.getElementById('buscadorPanel').value.toLowerCase();
+  document.querySelectorAll('#panelContainer .panel-card').forEach(function(c){
+    var n = c.querySelector('.pc-name').textContent.toLowerCase();
+    c.style.display = n.includes(q) ? 'block' : 'none';
   });
 }
 
-function createEditBtn(val, rem, colLetra, fila, isNum) {
-  const wrap = document.createElement('div'); wrap.style.display = 'flex'; wrap.style.alignItems = 'center'; wrap.style.gap = '8px';
-  const span = document.createElement('span'); span.textContent = val || '-';
-  const btn  = document.createElement('button'); btn.className = 'tdBtn'; btn.innerHTML = '✏️';
-  if (rem <= 0) btn.style.display = 'none';
-  btn.onclick = () => { editContext = { fila: fila, col: colLetra, spanElement: span, btnElement: btn }; openModal(isNum ? 'panel_min' : 'panel_obs', val); };
-  wrap.append(span, btn); return wrap;
+// ============================================================
+// TARDANZAS
+// ============================================================
+var tardColabsCargados = false;
+
+function cargarColaboradoresTard() {
+  // Los colaboradores se cargan dinámicamente cuando se consultan
+  // (vienen en la respuesta del endpoint de tardanzas)
 }
 
-const mMask  = document.getElementById('modalMask');
-const mInput = document.getElementById('modalInput');
-const mArea  = document.getElementById('modalArea');
-
-function openModal(mode, initialValue) {
-  modalMode = mode; mInput.style.display = 'none'; mArea.style.display = 'none';
-  if (mode === 'panel_min') {
-    document.getElementById('modalTitle').textContent = 'Escribir Minutos';
-    mInput.style.display = 'block'; mInput.value = initialValue === '-' ? '' : initialValue; mInput.setAttribute('inputmode', 'numeric');
-  } else {
-    document.getElementById('modalTitle').textContent = 'Escribir Observación';
-    mArea.style.display = 'block'; mArea.value = initialValue === '-' ? '' : initialValue;
-  }
-  mMask.classList.add('show');
+function mostrarStatusTard(texto, estilo) {
+  var a = document.getElementById('tardStatus');
+  a.style.display = 'flex';
+  a.innerHTML = '<div class="status-msg ' + estilo + '">' + texto + '</div>';
+  if (estilo !== 'loading') setTimeout(function(){ a.style.display = 'none'; }, 3500);
 }
 
-function closeModal() { mMask.classList.remove('show'); mInput.blur(); mArea.blur(); modalMode = null; }
-
-function guardarModal() {
-  let val = modalMode === 'panel_min' ? mInput.value.trim() : mArea.value.trim();
-  if (editContext) {
-    const { fila, col, spanElement, btnElement } = editContext;
-    if (col === 'H' && val && isNaN(val)) { alert('Solo números'); return; }
-    closeModal(); btnElement.disabled = true;
-    const oldVal = spanElement.textContent; spanElement.textContent = val || '-';
-    fetch(API, { method: "POST", body: JSON.stringify({ action: 'update_cell', token: sessionToken, fila: fila, colLetra: col, valor: val }) })
-      .then(res => res.json()).then(res => {
-        if (res.ok) { if (!res.unchanged && res.remaining <= 0) btnElement.style.display = 'none'; btnElement.disabled = false; }
-        else { alert(res.msg); spanElement.textContent = oldVal; btnElement.disabled = false; }
-      }).catch(() => { alert("Error de red."); spanElement.textContent = oldVal; btnElement.disabled = false; });
-  }
-}
-
-// ==========================================
-// MÓDULO TARDANZAS
-// ==========================================
-let colaboradoresTardanzaCargados = false;
-
-function cargarColaboradoresTardanzas() {
-  if (colaboradoresTardanzaCargados) return; // Ya cargados, no volver a pedir
-  const sel = document.getElementById('tardanzaColab');
-  sel.innerHTML = '<option value="">⏳ Cargando...</option>';
-
-  fetch(API, { method: "POST", body: JSON.stringify({ action: 'get_colaboradores_tardanzas' }) })
-    .then(res => res.json())
-    .then(data => {
-      if (!data.ok || !data.colaboradores.length) {
-        sel.innerHTML = '<option value="">Sin datos en RESUMEN</option>'; return;
-      }
-      sel.innerHTML = '<option value="">— Seleccionar colaborador —</option>';
-      data.colaboradores.forEach(function(nombre) {
-        const opt = document.createElement('option');
-        opt.value = nombre; opt.textContent = nombre;
-        sel.appendChild(opt);
-      });
-      colaboradoresTardanzaCargados = true;
-
-      // Fechas por defecto: mes en curso
-      const hoy      = new Date();
-      const primerDia = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
-      document.getElementById('tardanzaDesde').value = primerDia.toISOString().split('T')[0];
-      document.getElementById('tardanzaHasta').value = hoy.toISOString().split('T')[0];
-    })
-    .catch(function() {
-      sel.innerHTML = '<option value="">❌ Error de conexión</option>';
-    });
-}
-
-function mostrarStatusTardanza(texto, estilo) {
-  const area = document.getElementById('tardanzaStatus');
-  area.style.display = 'flex';
-  area.innerHTML = '<div class="status-msg ' + estilo + '">' + texto + '</div>';
-  if (estilo !== 'loading') setTimeout(function() { area.style.display = 'none'; }, 3500);
-}
+// Al cargar la vista, poner fechas por defecto (mes en curso)
+(function() {
+  var hoy = new Date();
+  var p1  = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+  document.getElementById('tardDesde').value = p1.toISOString().split('T')[0];
+  document.getElementById('tardHasta').value = hoy.toISOString().split('T')[0];
+})();
 
 function consultarTardanzas() {
-  const colab = document.getElementById('tardanzaColab').value.trim();
-  const desde = document.getElementById('tardanzaDesde').value;
-  const hasta = document.getElementById('tardanzaHasta').value;
+  var colab = document.getElementById('tardColab').value.trim();
+  var desde = document.getElementById('tardDesde').value;
+  var hasta = document.getElementById('tardHasta').value;
+  if (!desde || !hasta) { mostrarStatusTard('⚠️ Indica el rango de fechas', 'error'); return; }
+  if (desde > hasta)    { mostrarStatusTard('⚠️ La fecha inicial no puede ser mayor', 'error'); return; }
 
-  if (!colab) { mostrarStatusTardanza('⚠️ Selecciona un colaborador', 'error'); return; }
-  if (!desde) { mostrarStatusTardanza('⚠️ Indica la fecha de inicio', 'error'); return; }
-  if (!hasta) { mostrarStatusTardanza('⚠️ Indica la fecha de fin', 'error'); return; }
-  if (desde > hasta) { mostrarStatusTardanza('⚠️ La fecha inicial no puede ser mayor que la final', 'error'); return; }
-
-  const btn = document.getElementById('btnConsultarTardanzas');
+  var btn = document.getElementById('btnTard');
   btn.disabled = true; btn.innerText = '⏳ Consultando...';
-  document.getElementById('tardanzaResumenCard').style.display = 'none';
-  document.getElementById('tardanzaCardsContainer').innerHTML = '';
-  mostrarStatusTardanza('Cargando datos... 🚀', 'loading');
+  document.getElementById('tardResumen').style.display = 'none';
+  document.getElementById('tardContainer').innerHTML = '';
+  mostrarStatusTard('Cargando... 🚀', 'loading');
 
-  fetch(API, {
-    method: "POST",
-    body: JSON.stringify({ action: 'get_tardanzas', colaborador: colab, fechaDesde: desde, fechaHasta: hasta })
-  })
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
+  var url = API + '/tardanzas?sucursalNombre=' + encodeURIComponent(SUCURSAL) +
+            '&apiKey=' + API_KEY +
+            '&fechaDesde=' + desde +
+            '&fechaHasta=' + hasta +
+            '&horaCorte='  + encodeURIComponent(HORA_CORTE) +
+            (colab ? '&colaborador=' + encodeURIComponent(colab) : '');
+
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
       btn.disabled = false; btn.innerText = '🔍 Consultar';
-      document.getElementById('tardanzaStatus').style.display = 'none';
-      if (!data.ok) { mostrarStatusTardanza('❌ ' + data.msg, 'error'); return; }
-      renderTardanzas(data.rows, data.totalMin, colab);
+      document.getElementById('tardStatus').style.display = 'none';
+      if (!data.ok) { mostrarStatusTard('❌ ' + data.message, 'error'); return; }
+
+      // Actualizar select de colaboradores con los que tienen datos
+      var sel = document.getElementById('tardColab');
+      var anterior = sel.value;
+      sel.innerHTML = '<option value="">— Todos —</option>';
+      (data.colaboradores || []).forEach(function(n){
+        var o = document.createElement('option');
+        o.value = n; o.textContent = n;
+        if (n === anterior) o.selected = true;
+        sel.appendChild(o);
+      });
+
+      renderTardanzas(data.rows, data.totalMin, desde, hasta);
     })
-    .catch(function() {
+    .catch(function(){
       btn.disabled = false; btn.innerText = '🔍 Consultar';
-      mostrarStatusTardanza('❌ Error de conexión', 'error');
+      mostrarStatusTard('❌ Error de conexión', 'error');
     });
 }
 
-function renderTardanzas(rows, totalMin, colab) {
-  const container = document.getElementById('tardanzaCardsContainer');
+function renderTardanzas(rows, totalMin, desde, hasta) {
+  var totalEl = document.getElementById('tardTotal');
+  totalEl.textContent = totalMin;
+  totalEl.className = 'tard-total-num' + (totalMin === 0 ? ' tard-total-cero' : '');
+
+  var d1 = desde.split('-').reverse().join('/');
+  var d2 = hasta.split('-').reverse().join('/');
+  document.getElementById('tardSub').textContent    = (rows.length) + ' registro' + (rows.length !== 1 ? 's' : '') + ' en el período';
+  document.getElementById('tardNombre').textContent = d1 + ' – ' + d2;
+  document.getElementById('tardResumen').style.display = 'block';
+
+  var container = document.getElementById('tardContainer');
   container.innerHTML = '';
 
-  // Tarjeta resumen total — siempre visible al consultar
-  const totalEl = document.getElementById('tardanzaTotalMin');
-  totalEl.textContent = totalMin;
-  totalEl.className   = 'tard-total-num' + (totalMin === 0 ? ' tard-total-cero' : '');
-
-  const desde = document.getElementById('tardanzaDesde').value.split('-').reverse().join('/');
-  const hasta = document.getElementById('tardanzaHasta').value.split('-').reverse().join('/');
-  document.getElementById('tardanzaNombreResumen').textContent = colab + ' · ' + desde + ' – ' + hasta;
-  document.getElementById('tardanzaTotalSub').textContent = rows.length + ' registro' + (rows.length !== 1 ? 's' : '') + ' en el período';
-  document.getElementById('tardanzaResumenCard').style.display = 'block';
-
   if (!rows || rows.length === 0) {
-    container.innerHTML = '<div class="card text-center" style="font-weight:600; color:#166534; background:#dcfce7; border:1px solid #bbf7d0; box-shadow:none;">✅ Sin tardanzas en el período seleccionado</div>';
+    container.innerHTML = '<div class="card text-center" style="font-weight:600; color:#166534; background:#dcfce7; border:1px solid #bbf7d0; box-shadow:none;">✅ Sin tardanzas en el período</div>';
     return;
   }
 
-  rows.forEach(function(r) {
-    var badgeClass = r.minTarde >= 30 ? 'tard-badge-alto' : r.minTarde >= 10 ? 'tard-badge-medio' : 'tard-badge-bajo';
-    const card = document.createElement('div');
+  rows.forEach(function(r){
+    var bc = r.minTarde >= 30 ? 'tard-badge-alto' : r.minTarde >= 10 ? 'tard-badge-medio' : 'tard-badge-bajo';
+    var card = document.createElement('div');
     card.className = 'panel-card';
     card.innerHTML =
-      '<div class="pc-header">' +
-        '<div class="pc-name">' + r.colaborador + '</div>' +
-      '</div>' +
-      '<div class="pc-row">' +
-        '<span class="pc-label">📅 Fecha</span>' +
-        '<span class="pc-val">' + r.fecha + '</span>' +
-      '</div>' +
-      '<div class="pc-row">' +
-        '<span class="pc-label">🕐 Hora llegada</span>' +
-        '<span class="pc-val">' + r.hora + '</span>' +
-      '</div>' +
-      '<div class="pc-row">' +
-        '<span class="pc-label">⏱ Min. tardanza</span>' +
-        '<span class="pc-val"><span class="tard-badge ' + badgeClass + '">' + r.minTarde + ' min</span></span>' +
-      '</div>';
+      '<div class="pc-header"><div class="pc-name">' + r.nombre + '</div></div>' +
+      '<div class="pc-row"><span class="pc-label">📅 Fecha</span><span class="pc-val">' + r.fecha.split('-').reverse().join('/') + '</span></div>' +
+      '<div class="pc-row"><span class="pc-label">🕐 Hora llegada</span><span class="pc-val">' + r.hora + '</span></div>' +
+      '<div class="pc-row"><span class="pc-label">⏱ Tardanza</span><span class="pc-val"><span class="tard-badge ' + bc + '">' + r.minTarde + ' min</span></span></div>';
     container.appendChild(card);
   });
 }
